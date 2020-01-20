@@ -1,0 +1,49 @@
+import pytest
+# TODO: Add a section at README.md for pytest ussage
+
+
+@pytest.mark.usefixtures("setup_fixture")
+class TestExample:
+    def test_title(self):
+        assert "Sample Website for Galen Framework" == self.driver.title
+
+    def test_login_present(self):
+        assert self.driver.find_element_by_xpath('//*[@id="welcome-page"]/p[3]/button').is_displayed()
+
+    def test_login(self):
+        self.driver.find_element_by_xpath('//*[@id="welcome-page"]/p[3]/button').click()
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        self.driver.find_element_by_name("login.username").send_keys(self.username)
+        self.driver.find_element_by_name("login.password").send_keys(self.password)
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').click()
+        assert self.driver.find_element_by_id("my-notes-page").is_displayed
+
+    def test_negative_login_username_nok(self):
+        self.driver.find_element_by_xpath('//*[@id="welcome-page"]/p[3]/button').click()
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        self.driver.find_element_by_name("login.username").send_keys(self.username_nok)
+        self.driver.find_element_by_name("login.password").send_keys(self.password)
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').click()
+        assert self.driver.find_element_by_id("login-error-message").is_displayed()
+
+    def test_negative_login_password_nok(self):
+        self.driver.find_element_by_xpath('//*[@id="welcome-page"]/p[3]/button').click()
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        self.driver.find_element_by_name("login.username").send_keys(self.username)
+        self.driver.find_element_by_name("login.password").send_keys(self.password_nok)
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').click()
+        assert self.driver.find_element_by_id("login-error-message").is_displayed()
+
+    def test_negative_login_username_and_password_empty(self):
+        self.driver.find_element_by_xpath('//*[@id="welcome-page"]/p[3]/button').click()
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        assert self.driver.find_element_by_name("login.username").is_displayed()
+        self.driver.find_element_by_xpath('//*[@id="login-page"]/p[3]/button[1]').click()
+        assert self.driver.find_element_by_id("login-error-message").is_displayed()
